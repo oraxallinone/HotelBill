@@ -1,0 +1,112 @@
+﻿.tableCust {
+    width: 100%;
+    font-family: 'Times New Roman';
+    font-size: 14px;
+    border-spacing: 0;
+    border-width: 0;
+    padding: 0;
+    border-width: 1px;
+}
+
+.tableBorderColaps {
+    height: 73px;
+    border-spacing: 0;
+    border-width: 0;
+    padding: 0;
+    border-width: 0;
+}
+
+.bgLight {
+    background-color: #e0f7faa1;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.textRight {
+    text-align: right;
+}
+
+.textLeft {
+    text-align: left;
+}
+
+.fontHeader {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.fontSubHeader {
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.fontMenuHeader {
+    font-size: 13px;
+    font-weight: bolder;
+    height: 40px;
+    background-color: #e0f7faa1;
+}
+
+
+
+.fontMenuBody {
+    font-size: 12px;
+}
+/* .fontMenuBody>td{
+    text-align: center;
+} */
+
+.marginLeft {
+    margin-left: 20px;
+}
+
+.marginRight {
+    margin-right: 75px;
+}
+
+.footerHeight {
+    height: 125px;
+}
+
+.tableBorderitem {
+    border: 1px solid #95c6cc;
+}
+
+.fontRed {
+    color: red;
+}
+
+.w104 {
+    width: 104px;
+}
+
+.bgcyn {
+    background-color: darkcyan;
+}
+
+.c-nav-link {
+    border: 1px solid #3574a4;
+}
+
+.acCustomer {
+    float: right;
+    margin-top: -28px;
+}
+.text-green{
+    color:green;
+}
+.text-red{
+    color:red;
+}
+.border-theme{
+    border: 1px solid #9bcad0a1;
+}
+.bg-theme{
+     background-color: #e0f7faa1; 
+}
+
+.bg-bisq{
+    background-color:#f5f5dcb5;
+}

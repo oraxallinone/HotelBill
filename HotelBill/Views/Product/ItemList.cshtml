@@ -1,0 +1,68 @@
+﻿@model IEnumerable<HotelBill.Models.ItemMaster>
+
+@{
+    ViewBag.Title = "ItemList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <div class="col-4">
+                                <h3 class="card-title">Item List</h3>
+                            </div>
+                            <div class="offset-10 col-2 textRight">
+                                <a href="/Product/ItemAdd" class="btn btn-outline-dangerCustome1 btn-dangerCustome1 btn-xs">Add New Item</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <table width="100%" class="tableCust table-hover" style="border: 1px solid #3574a4b0">
+                                        <tr class="fontMenuHeader textCenter">
+                                            <td style="width:5% ;text-align: center;"> Sl No </td>
+                                            <td style="width: 30%; text-align: left"> Item Name  </td>
+                                            <td style="width: 15%; text-align: left">Item Code </td>
+                                            <td style="width:15% ;"> HSN </td>
+                                            <td style="width:10% ;"> Rate </td>
+                                            <td style="width:5% ;"> GST </td>
+                                            <td style="width:10% ;"> ACTION </td>
+                                        </tr>
+                                        @{
+                                            int snNo = Model.Count()+1;
+                                            foreach (var itm in @Model)
+                                            {
+                                                snNo = snNo - 1;
+
+                                                string bgModified = itm.IsActive == true ? "" : "#f4240438";
+
+                                                <tr class="fontMenuBody" style="border: 1px solid #3574a4b0;background-color:@bgModified">
+                                                    <td class="textCenter">@snNo</td>
+                                                    <td class="">@itm.ItemDetails</td>
+                                                    <td class=""> @itm.ItemCode </td>
+                                                    <td class="textCenter">@itm.HSN</td>
+                                                    <td class="textCenter">@itm.Rate</td>
+                                                    <td class="textCenter">@itm.Gst</td>
+                                                    <td class="textCenter">
+                                                        <a href="/Product/ItemView/@itm.ItemId"> <i class="fa-solid fa-eye"></i></a>|
+                                                        <a href="/Product/ItemEdit/@itm.ItemId"> <i class="fa-solid fa-pen-to-square"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

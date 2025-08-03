@@ -1,0 +1,130 @@
+﻿@model HotelBill.Models.ItemMaster
+@{
+    ViewBag.Title = "ItemAdd";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "signupform" }))
+{
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-info card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">New Item</h3>
+                            </div>
+                            <div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Item Code</label>
+                                            @Html.TextBoxFor(m => m.ItemCode, new { placeholder = "Item Code", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.ItemCode, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Item Name</label>
+                                            @Html.TextBoxFor(m => m.ItemDetails, new { placeholder = "Item Name new", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.ItemDetails, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">HSN/SAC</label>
+                                            @Html.TextBoxFor(m => m.HSN, new { placeholder = "HSN/ SAC", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.HSN, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Rate</label>
+                                            @Html.TextBoxFor(m => m.Rate, new { type = "number", placeholder = "Rate", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.Rate, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Gst</label>
+                                            <select class="form-control form-control-sm" id="Gst" name="Gst">
+                                                <option value="0">-- Select One --</option>
+                                                <option value="5">5</option>
+                                                <option value="12">12</option>
+                                                <option value="18">18</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    @if (ViewBag.isPresent != null) { <span class="bg-red btn btn-sm">@ViewBag.isPresent</span> } 
+                                    <button type="submit" id="itemSubmit" class="btn  btn-sm  btn-info w104">Submit</button>
+                                    <a href="/Product/ItemList" class="btn btn-sm   btn-outline-danger w104">Back</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+}
+
+
+
+<aside class="control-sidebar control-sidebar-dark"></aside>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#itemSubmit").click(function (e) {
+            e.preventDefault();
+            var ItemCode = $("#ItemCode").val();
+            var ItemDetails = $("#ItemDetails").val();
+            var HSN = $("#HSN").val();
+            var Rate = $("#Rate").val();
+            var Gst = $("#Gst").val();
+            var isPost = false;
+
+            if (ItemCode == "") { swal("", "Item Code should not be empty", "error"); return false; }
+            if (ItemDetails == "") { swal("", "Item Details should not be empty", "error"); return false; }
+
+            if (HSN == "") { swal("", "HSN should not be empty", "error"); return false; }
+            if (Rate == "") { swal("", "Rate should not be empty", "error"); return false; }
+            if (Gst == "" ||Gst == 0 ) { swal("", "Gst should not be empty", "error"); return false; }
+
+            isPost = true
+            
+            if (isPost == true) {
+                $("#signupform").submit();
+            }
+        });
+
+        $('[id^=Rate]').keypress(validateNumber);
+        $('[id^=Gst]').keypress(validateNumber);
+
+
+        function validateNumber(event) {
+            var key = window.event ? event.keyCode : event.which;
+            if (event.keyCode === 8 || event.keyCode === 46) {
+                return true;
+            } else if (key < 48 || key > 57) {
+                return false;
+            } else {
+                return true;
+            }
+        };
+
+        $('#Gst').change(function () {
+
+            var gst = $('#Gst').val();
+            if (gst != 0)
+            {
+                var tempGst = parseInt(gst);
+                $('#Cgst').val(tempGst / 2);
+                $('#Sgst').val(tempGst / 2);
+            }
+            else {
+                $('#Cgst').val('');
+                $('#Sgst').val('');
+            }
+        });
+
+    });
+</script>

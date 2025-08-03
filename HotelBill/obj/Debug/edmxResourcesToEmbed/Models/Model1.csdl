@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Hospital_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Bill_DBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CounterMasters" EntityType="Hospital_DBModel.CounterMaster" />
+    <EntitySet Name="CustomerMasters" EntityType="Hospital_DBModel.CustomerMaster" />
+    <EntitySet Name="InvoiceDetails" EntityType="Hospital_DBModel.InvoiceDetail" />
+    <EntitySet Name="ItemMasters" EntityType="Hospital_DBModel.ItemMaster" />
+    <EntitySet Name="ItemTransactions" EntityType="Hospital_DBModel.ItemTransaction" />
+  </EntityContainer>
+  <EntityType Name="CounterMaster">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="counterName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="counterValue" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerMaster">
+    <Key>
+      <PropertyRef Name="custId" />
+    </Key>
+    <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="custName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="addr1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="addr2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="addr3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="gstIn" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="gstType" Type="Int32" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="createdDate" Type="DateTime" Precision="3" />
+    <Property Name="updatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="InvoiceDetail">
+    <Key>
+      <PropertyRef Name="IId" />
+    </Key>
+    <Property Name="IId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="INo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDraftNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDate" Type="DateTime" Precision="3" />
+    <Property Name="ICustId" Type="Int32" Nullable="false" />
+    <Property Name="IinvoiceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TotalValue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="TotalGST" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="TotalTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemMaster">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ItemDetails" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="HSN" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Gst" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemTransaction">
+    <Key>
+      <PropertyRef Name="IdT" />
+    </Key>
+    <Property Name="IdT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceNoT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DraftNoT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ItemCodeT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ItemDetails" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="HSN" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Value" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="GstRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="GstValue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+</Schema>

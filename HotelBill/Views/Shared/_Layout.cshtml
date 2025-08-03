@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/x-icon" href="~/theme/img/favicon.ico">
+   
+    <link href="~/theme/adminlte.css" rel="stylesheet" />
+    <link href="~/theme/customeCss.css" rel="stylesheet" />
+
+   <link href="~/theme/fontawesome.css" rel="stylesheet" />
+    <script src="~/theme/fontawesome.js"></script>
+
+ 
+
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.clear();
+        });
+    </script>
+</head>
+<body class="hold-transition sidebar-mini" style="font-family:'Times New Roman';font-size:13px">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    @*https://fontawesome.com/icons*@
+                    @*<img src="~/theme/img/WhatsApp%20Image%202022-09-21%20at%204.57.32%20PM.jpeg" />*@
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header text-red">Logout</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        @*left side menu*@
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a href="/Product/Index" class="brand-link">
+                <img src="~/theme/img/11zon_cropped.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light" style="color: #d0cb7d">Billing Tracer</span>
+            </a>
+            <div class="sidebar">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item"> <a href="/PRODUCT/Index" class="nav-link"> <i class="nav-icon fas fa-tachometer-alt"></i> <p>Dashboard</p> </a> </li>
+
+                        <li class="nav-item"> <a href="/Product/CustomerAdd" class="nav-link"> <i class="nav-icon fa-solid fa-circle-user"></i> <p>Add Customer</p> </a> </li>
+                        <li class="nav-item"> <a href="/Product/CustomerList" class="nav-link"> <i class="nav-icon fa-solid fa-user-group"></i> <p>Customer List</p> </a> </li>
+
+                        <li class="nav-item"> <a href="/PRODUCT/ItemAdd" class="nav-link"> <i class="nav-icon fa-solid fa-warehouse"></i> <p>Add Item</p> </a> </li>
+                        <li class="nav-item"> <a href="/PRODUCT/ItemList" class="nav-link"> <i class="nav-icon fa-solid fa-list"></i> <p>Item List</p> </a> </li>
+
+                        <li class="nav-item"> <a href="/Invoice/GstInvoiceCreate" class="nav-link"> <i class="nav-icon fa-solid fa-window-maximize"></i> <p> Crete GstInvoice </p> </a> </li>
+                       
+                        <li class="nav-item"> <a href="/Invoice/GstDraftList" class="nav-link"> <i class="nav-icon fa-solid fa-file-lines"></i> <p> GST Draft List </p> </a> </li>
+
+                        
+                         <li class="nav-item"> <a href="/Invoice/GstInvoiceList" class="nav-link"> <i class="nav-icon fa-solid fa-file-lines"></i> <p> GST invoice List </p> </a> </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/theme/bootstrap.bundle.min.js"></script>
+    <script src="~/theme/bs-custom-file-input.min.js"></script>
+    <script src="~/theme/adminlte.min.js"></script>
+    <script src="~/theme/demo.js"></script>
+    <link href="~/theme/fontawesome.css" rel="stylesheet" />
+    <script src="~/theme/fontawesome.js"></script>
+    @*<script src="~/theme/all.js"></script>*@
+   
+    <script src="~/theme/sweetalert.min.js"></script>
+    <script>  $(function () { bsCustomFileInput.init(); }); </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Hospital_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CounterMaster">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="counterName" Type="varchar" MaxLength="150" />
+    <Property Name="counterValue" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerMaster">
+    <Key>
+      <PropertyRef Name="custId" />
+    </Key>
+    <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custName" Type="varchar" MaxLength="250" />
+    <Property Name="addr1" Type="nvarchar(max)" />
+    <Property Name="addr2" Type="nvarchar(max)" />
+    <Property Name="addr3" Type="nvarchar(max)" />
+    <Property Name="gstIn" Type="nvarchar" MaxLength="150" />
+    <Property Name="gstType" Type="int" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="createdDate" Type="datetime" />
+    <Property Name="updatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InvoiceDetail">
+    <Key>
+      <PropertyRef Name="IId" />
+    </Key>
+    <Property Name="IId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="INo" Type="varchar" MaxLength="50" />
+    <Property Name="IDraftNo" Type="varchar" MaxLength="50" />
+    <Property Name="IDate" Type="datetime" />
+    <Property Name="ICustId" Type="int" Nullable="false" />
+    <Property Name="IinvoiceStatus" Type="varchar" MaxLength="50" />
+    <Property Name="TotalValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalGST" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemMaster">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCode" Type="varchar" MaxLength="150" />
+    <Property Name="ItemDetails" Type="nvarchar" MaxLength="350" />
+    <Property Name="HSN" Type="varchar" MaxLength="150" />
+    <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Gst" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemTransaction">
+    <Key>
+      <PropertyRef Name="IdT" />
+    </Key>
+    <Property Name="IdT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceNoT" Type="varchar" MaxLength="150" />
+    <Property Name="DraftNoT" Type="varchar" MaxLength="150" />
+    <Property Name="ItemCodeT" Type="varchar" MaxLength="150" />
+    <Property Name="ItemDetails" Type="nvarchar" MaxLength="250" />
+    <Property Name="HSN" Type="varchar" MaxLength="150" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GstRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GstValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="Hospital_DBModelStoreContainer">
+    <EntitySet Name="CounterMaster" EntityType="Self.CounterMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerMaster" EntityType="Self.CustomerMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceDetail" EntityType="Self.InvoiceDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemMaster" EntityType="Self.ItemMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemTransaction" EntityType="Self.ItemTransaction" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

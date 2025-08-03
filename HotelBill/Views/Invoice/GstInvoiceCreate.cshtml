@@ -1,0 +1,154 @@
+﻿@model HotelBill.Models.InvoiceGstViewModel
+
+@{
+    ViewBag.Title = "GstInvoiceCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*CTRL + M + O -mini mize*@
+@*CTRL + M + L- opne*@
+<link href="~/Content/application-css/common-date-format.css" rel="stylesheet" />
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid" style="padding-right: 0px; padding-left: 0px">
+
+            @using (Html.BeginForm())
+            {
+                <div class="card card-info card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Create New Bill</h3>
+                    </div>
+                    <div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="IDraftNo" style="font-size:14px">Draft No</label>
+                                    @Html.TextBoxFor(m => m.IDraftNo, new { placeholder = "Draft No", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                    @Html.HiddenFor(m=>m.IsDraft)
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="custId" style="font-size:14px">Customer</label>
+                                    <a href="/Product/CustomerAdd" style="font-size:10px">Create New</a>
+                                    @Html.DropDownList("custId", (IEnumerable<SelectListItem>)ViewBag.customer, "-- Select One --", new { @class = "form-control form-control-sm" })
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="IDate" style="font-size:14px">Date  </label>
+                                    @Html.TextBoxFor(m => m.IDate, new { @class = "form-control form-control-sm", type = "date" })
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="INo" style="font-size:14px">Invoice No</label>
+                                    @Html.TextBoxFor(m => m.INo, new { placeholder = "Invoice No", @class = "form-control form-control-sm", @readonly = "readonly", Styles = "color:#e9ecef" })
+                                </div>
+                               
+                            </div>
+                            <div class="row">
+                                <table id="tblInvoice" width="100%" class="tableCust" style="border: 1px solid #9bcad0a1">
+                                    <thead>
+                                        <tr class="fontMenuHeader textCenter" style="font-size: 11px;">
+                                            <td style="width:4% ;text-align: center;"> SL No </td>
+                                            <td style="width:29% ;"> Item Name </td>
+                                            <td style="width:8% ;"> Hsn/Sac </td>
+                                            <td style="width:12% ;"> Qantity</td>
+                                            <td style="width:8% ;"> Rate </td>
+                                            <td style="width:8% ;"> Value </td>
+                                            <td style="width:8% ;"> Gst</td>
+                                            <td style="width:8% ;" class="tblGstValue"> Gst Value</td>
+                                            <td style="width:10% ;"> Total </td>
+                                            <td style="width:5% ;">  </td>
+                                        </tr>
+                                        <tr class="fontMenuBody">
+                                            <td class="textCenter"> </td>
+                                            <td>
+                                                <input id="itm_ItemCodeT" type="hidden" />
+                                                @Html.DropDownList("ItemCode", (IEnumerable<SelectListItem>)ViewBag.items, "-- Select One --", new { @class = "form-control form-control-sm" })
+                                            </td>
+                                            <td class="textCenter"><input id="itm_HSN" type="text" class="form-control form-control-sm" placeholder="hsn" readonly="readonly" /></td>
+                                            <td class="textCenter">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td><i id="iMinus" class="fa-solid fa-circle-minus" style="height:22px"></i></td>
+                                                            <td><input id="itm_Quantity" type="text" class="form-control form-control-sm" placeholder="qty" /></td>
+                                                            <td><i id="iPlus" class="fa-solid fa-circle-plus" style="height:22px"></i> </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                            <td class="textCenter"><input id="itm_Rate" type="text" class="form-control form-control-sm" placeholder="rate" readonly="readonly" /></td>
+                                            <td class="textRight"><input id="itm_Value" type="text" class="form-control form-control-sm" placeholder="value" readonly="readonly" /></td>
+                                            <td class="textCenter"><input id="itm_GstRate" type="text" class="form-control form-control-sm" placeholder="gst" readonly="readonly" /></td>
+                                            <td class="textCenter"><input id="itm_GstValue" type="text" class="form-control form-control-sm" readonly="readonly" /></td>
+                                            <td class="textRight"><input id="itm_Total" type="text" class="form-control form-control-sm" placeholder="total" readonly="readonly" /></td>
+                                            <td class="textRight"> <input id="btnAddItm" type="button" class="btn btn-sm btn-outline-success bg-info" value="Add" /> </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr class="fontMenuHeader" style="border: 1px solid #95c6cc">
+                                            <td colspan="5" class="textCenter"> Total </td>
+                                            <td class="textRight gItmValue re-set" style="border: 1px solid #95c6cc"> 0.00 </td>
+                                            <td> </td>
+                                            <td class="textRight gItmGstValue re-set" style="border: 1px solid #95c6cc"> 0.00</td>
+                                            <td class="textRight gItmTotal re-set" style="border: 1px solid #95c6cc"> 0.00 </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12">
+                                                <table style="float: right; width: 39%; " class="border-theme bg-theme">
+                                                    <tfoot>
+                                                        <tr class="section-group">
+                                                            <td class="textCenter"></td>
+                                                            <td class="gst-5-show">5%</td>
+                                                            <td class="gst-12-show">12%</td>
+                                                            <td class="gst-18-show">18%</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr class="section-sgst">
+                                                            <td class="textCenter">CGST</td>
+                                                            <td class="re-set gst-5-show" id="cgst-5-footer">0.00</td>
+                                                            <td class="re-set gst-12-show" id="cgst-12-footer">0.00</td>
+                                                            <td class="re-set gst-18-show" id="cgst-18-footer">0.00</td>
+                                                            <td class="textRight">CGST :&nbsp;</td>
+                                                            <td class="re-set" id="cgst-all-footer">0.00</td>
+                                                        </tr>
+                                                        <tr class="section-sgst">
+                                                            <td class="textCenter">SGST</td>
+                                                            <td class="re-set gst-5-show" id="sgst-5-footer">0.00</td>
+                                                            <td class="re-set gst-12-show" id="sgst-12-footer">0.00</td>
+                                                            <td class="re-set gst-18-show" id="sgst-18-footer">0.00</td>
+                                                            <td class="textRight">SGST :&nbsp;</td>
+                                                            <td class="re-set" id="sgst-all-footer">0.00</td>
+                                                        </tr>
+                                                        <tr class="section-igst">
+                                                            <td class="textCenter">IGST</td>
+                                                            <td class="re-set gst-5-show" id="igst-5-footer">0.00</td>
+                                                            <td class="re-set gst-12-show" id="igst-12-footer">0.00</td>
+                                                            <td class="re-set gst-18-show" id="igst-18-footer">0.00</td>
+                                                            <td class="textRight">IGST : &nbsp;</td>
+                                                            <td class="re-set" id="igst-all-footer">0.00</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn  btn-sm btn-info w104" id="invoiceSubmit">Submit & new</button>
+                            <button type="button" class="btn  btn-sm btn-info w104" id="invoicePrint">Submit & Print</button>
+                            <button type="button" class="btn  btn-sm btn-info w104" id="invoiceDraft">Draft</button>
+                            <button type="button" id="reset" class="btn btn-sm btn-outline-danger w104">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>
+<script src="~/Scripts/application-js/common.js"></script>
+<script src="~/Scripts/application-js/gst-invoice-create.js"></script>
+

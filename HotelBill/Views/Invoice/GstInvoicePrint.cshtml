@@ -1,0 +1,252 @@
+﻿@model HotelBill.Models.InvoiceGstViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GstInvoicePrint</title>
+    <link href="~/theme/printBillStyle.css" rel="stylesheet" />
+    <style>
+        tr{
+            border:1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="tblInvoice">
+
+
+        <table class="table" border="1">
+            <tr class="bgLight">
+                <td colspan="9" class="textCenter fontHeader">
+                    Tax Invoice
+                </td>
+            </tr>
+            <tr class="bgLight">
+                <td colspan="9" class="textCenter fontSubHeader">
+                    <span>M/S. ANNAPURNA SWEETS </span><br>
+                    <span>Duburi,&nbsp; Kalinganagar&nbsp;,&nbsp;Jajpur&nbsp;,&nbsp; Odisha-755026</span><br>
+                    <span>Mob-7873444133, &nbsp;&nbsp;Email- tasteavenue.d@gmail.com</span><br>
+                    <span>GSTIN- 21EQZPS3634F1ZF</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="fontSubHeader">
+                    <span>To </span><br>
+                    <span class="marginLeft" style="text-transform: capitalize; "> @Model.custName </span><br>
+                    <span class="marginLeft">@Model.cusstAdd1 </span><br>
+                    <span class="marginLeft">@Model.custAdd2 </span>
+                    <span class="marginLeft">@Model.custAdd3 </span>
+                    <br />
+                    <span class="marginLeft">GSTIN NO :</span><span class="marginLeft">@Model.custGstin </span>
+                    @Html.HiddenFor(m => m.IGstType)
+                </td>
+                <td colspan="4" class="fontSubHeader textRight">
+                    <table width="100%" class="tableBorderColaps" border="1">
+                        <tr>
+                            <td class="rem-border-td1">
+                                Invoice No: @Model.INo
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Invoice Date: @( Model.IDate.HasValue ? Model.IDate.Value.ToString("dd-MM-yyyy") : "")
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9" class="textCenter">
+                    <!-- Lunch at here --> &nbsp;
+                </td>
+            </tr>
+            <tr class="fontMenuHeader textCenter">
+                <td style="width:5% ;text-align: center;"> Sl No </td>
+                <td style="width:31% ;"> Details </td>
+                <td style="width:9% ;"> HSN/SAC </td>
+                <td style="width:7% ;"> Qnty </td>
+                <td style="width:10% ;"> Rate </td>
+                <td style="width:10% ;"> Value </td>
+                <td style="width:10% ;"> GST Rate </td>
+                <td style="width:10% ;"> GST Value </td>
+                <td style="width:8% ;"> TOTAL </td>
+            </tr>
+            @{
+                    int snNo = 0;
+                    //decimal total_cgst_18 = 0.00m;
+                    //decimal total_cgst_28 = 0.00m;
+
+                    foreach (var ss in Model.ItemTransList)
+                    {
+                        snNo = snNo + 1;
+                <tr class="fontMenuBody cTableRow">
+                    <td class="textCenter cItmCode">@snNo</td>
+                    <td class="cItmName"> @ss.itm_ItemDetails </td>
+                    <td class="textCenter cItmHsn">@ss.itm_HSN</td>
+                    <td class="textCenter cItmQty">@ss.itm_Quantity</td>
+                    <td class="textCenter cItmRate">@ss.itm_Rate </td>
+                    <td class="textRight cItmValue">@ss.itm_Value </td>
+                    <td class="textCenter cItmGst"> @Convert.ToInt32(ss.itm_GstRate) </td>
+                    <td class="textRight cItmGstValue">@ss.itm_GstValue </td>
+                    <td class="textRight cItmTotal"> @ss.itm_Total </td>
+                </tr>
+                    }
+            }
+
+            <tr class="fontMenuHeader">
+                <td colspan="5" class="textCenter"> Total </td>
+                <td class="textRight">@Math.Round(Model.TotalValue).ToString("0.00") </td>
+                <td> </td>
+                <td class="textRight"> @Math.Round(@Model.TotalGST).ToString("0.00") </td>
+                <td class="textRight">@Math.Round(@Model.TotalTotal).ToString("0.00")</td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <table style="float: right; width: 38%; " class="border-theme bg-theme">
+                        <tfoot>
+                            <tr class="section-group">
+                                <td class="textCenter"></td>
+                                <td>5%</td>
+                                <td>12%</td>
+                                <td>18%</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="section-sgst">
+                                <td class="textCenter" style="font-size:11px">CGST</td>
+                                <td id="cgst-5-footer">0.00</td>
+                                <td id="cgst-12-footer">0.00</td>
+                                <td id="cgst-18-footer">0.00</td>
+                                <td class="textRight" style="font-size:11px">CGST :&nbsp;</td>
+                                <td id="cgst-all-footer">0.00</td>
+                            </tr>
+                            <tr class="section-sgst">
+                                <td class="textCenter" style="font-size:11px">SGST</td>
+                                <td id="sgst-5-footer">0.00</td>
+                                <td id="sgst-12-footer">0.00</td>
+                                <td id="sgst-18-footer">0.00</td>
+                                <td class="textRight" style="font-size:11px">SGST :&nbsp;</td>
+                                <td id="sgst-all-footer">0.00</td>
+                            </tr>
+                            <tr class="section-igst">
+                                <td class="textCenter" style="font-size:11px">IGST</td>
+                                <td id="igst-5-footer">0.00</td>
+                                <td id="igst-12-footer">0.00</td>
+                                <td id="igst-18-footer">0.00</td>
+                                <td class="textRight" style="font-size:11px">IGST : &nbsp;</td>
+                                <td id="igst-all-footer">0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </td>
+            </tr>
+
+            <tr class="fontMenuHeader">
+                <td colspan="8" class="textCenter"> Grand Total Amount Rs. </td>
+                <td class="textRight">  @Math.Round(Model.TotalTotal) </td>
+
+            </tr>
+            <tr>
+                <td colspan="9" class="textCenter">
+                    Rupees in words - ( <span id="wordprint"> @Model.InWord rupees only </span>  )
+                </td>
+            </tr>
+            <tr class="bgLight footerHeight textRight">
+                <td colspan="10">
+                    <div class="marginRight">
+                        For M/S. ANNAPURNA SWEETS
+                        <br> <br><br>
+                        Auttorised Signature
+                    </div>
+                    <br>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+    <div style="margin-left: 17%;">
+        <input type="button" class="btn btn-success" onclick="PrintDiv();" value="Print" />| <a href="/Invoice/GstInvoiceList">Invoice List</a> | <a href="/Invoice/GstInvoiceCreate" style="color:green">Create New Invoice</a>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+
+    <script type="text/javascript">
+        function PrintDiv() {
+            var divContents = document.getElementById("tblInvoice").innerHTML;
+            var printWindow = window.open('', '', 'height=600,width=1200');
+            printWindow.document.write('<html><head><title>Bill Content2</title> <style type="text/css"> .table { width: 700px; font-family: Times New Roman; font-size: 14px; border-spacing: 0; border-width: 0; padding: 0; border-width: 0; } .tableBorderColaps { height: 73px; border-spacing: 0; border-width: 0; padding: 0; border-width: 0; } .bgLight{ background-color: #e0f7faa1; } .textCenter{ text-align: center; } .textRight{ text-align: right; } .textLeft{ text-align: left; } .fontHeader{ font-size: 25px; font-weight:bolder ; } .fontSubHeader{ font-size: 15px; font-weight:bolder ; } .fontMenuHeader{ font-size: 13px; font-weight:bolder ; height: 40px; background-color: #e0f7faa1; } .fontMenuBody{ font-size: 12px; } /* .fontMenuBody>td{ text-align: center; } */ .marginLeft{ margin-left: 20px; } .marginRight{ margin-right: 75px; } .footerHeight{ height: 125px; } .border-theme{ border: 1px solid #9bcad0a1; } .bg-theme{ background-color: #e0f7faa1; } </style>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+        $(document).ready(function () {
+            //onReady---start
+            gstCalculation();
+            //onReady----end
+
+            function gstCalculation() {
+                var gst5 = 0.00, gst12 = 0.00, gst18 = 0.00, gstAll = 0.00;
+
+                $('.cTableRow').each(function () {
+                    let gstGroup = $(this).find("td:eq(6)").text().trim();
+                    let gstValue = $(this).find("td:eq(7)").text().trim();
+
+                    gstAll = (parseFloat(gstAll) + parseFloat(gstValue)).toFixed(2);
+
+                    if (gstGroup == "5") {
+                        gst5 = (parseFloat(gst5) + parseFloat(gstValue)).toFixed(2);
+                    }
+                    else if (gstGroup == "12") {
+                        gst12 = (parseFloat(gst12) + parseFloat(gstValue)).toFixed(2);
+                    }
+                    else if (gstGroup == "18") {
+                        gst18 = (parseFloat(gst18) + parseFloat(gstValue)).toFixed(2);
+                    }
+                    console.log(gst5, gst12, gst18);
+                });
+
+                let gstTyep = $('#IGstType').val();
+                if (gstTyep == "1") {
+                    //cgst
+                    $('#cgst-5-footer').text((gst5 / 2).toFixed(2));
+                    $('#cgst-12-footer').text((gst12 / 2).toFixed(2));
+                    $('#cgst-18-footer').text((gst18 / 2).toFixed(2));
+                    $('#cgst-all-footer').text((gstAll / 2).toFixed(2));
+                    //sgst
+                    $('#sgst-5-footer').text((gst5 / 2).toFixed(2));
+                    $('#sgst-12-footer').text((gst12 / 2).toFixed(2));
+                    $('#sgst-18-footer').text((gst18 / 2).toFixed(2));
+                    $('#sgst-all-footer').text((gstAll / 2).toFixed(2));
+
+                    $('.section-sgst').show();
+                    $('.section-sgst').show();
+                    $('.section-igst').hide();
+                }
+                if (gstTyep == "2") {
+                    //igst
+                    $('#igst-12-footer').text(gst12);
+                    $('#igst-18-footer').text(gst18);
+                    $('#igst-all-footer').text(gstAll);
+                    $('#igst-5-footer').text(gst5);
+
+                    $('.section-sgst').hide();
+                    $('.section-sgst').hide();
+                    $('.section-igst').show();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
