@@ -1,0 +1,79 @@
+﻿@model HotelBill.Models.ItemMaster
+@{
+    ViewBag.Title = "ItemEdit";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Quick Example</h3>
+                            </div>
+                            <div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Item Code</label>
+                                            @Html.TextBoxFor(m => m.ItemCode, new { placeholder = "Item Code", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.ItemCode, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Item Name</label>
+                                            @Html.TextBoxFor(m => m.ItemDetails, new { placeholder = "Item Name", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.ItemDetails, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">HSN/SAC</label>
+                                            @Html.TextBoxFor(m => m.HSN, new { placeholder = "HSN/ SAC", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.HSN, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Rate</label>
+                                            @Html.TextBoxFor(m => m.Rate, new { type = "number", placeholder = "Rate", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.Rate, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Gst</label>
+                                            @Html.TextBoxFor(m => m.Gst, new { type = "number", placeholder = "GST", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.Gst, "", new { @class = "text-danger" })
+                                        </div>
+                                       <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">IsActive For Transaction</label>
+                                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-control form-control-sm", @readonly = "readonly", @disabled = "disabled" })
+                                            @Html.ValidationMessageFor(m => m.IsActive, "", new { @class = "text-danger" })
+                                            @if (Model != null && Model.IsActive != null && Model.IsActive == true)
+                                            {
+                                                <span class="acCustomer text-green">(Active)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="acCustomer text-red">(Inactive)</span>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <a href="/Product/ItemList" class="btn btn-sm btn-outline-danger w104">Back</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+}
+
+<aside class="control-sidebar control-sidebar-dark"></aside>
+
+ 

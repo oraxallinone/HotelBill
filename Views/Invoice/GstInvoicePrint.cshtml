@@ -1,0 +1,315 @@
+﻿@model HotelBill.Models.InvoiceGstViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GstInvoicePrint</title>
+    <link href="~/theme/printBillStyle.css" rel="stylesheet" />
+    <style type="text/css">
+        td {
+            border: 1px solid black;
+        }
+
+        .border0-bottom {
+            border-bottom: 0px solid black;
+        }
+
+        .border0-right {
+            border-right: 0px;
+        }
+
+        #printFooter tfoot td {
+            border: 1px solid #95f3ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="tblInvoice">
+
+
+        <table class="table" border="1">
+            <tr class="bgLight">
+                <td colspan="9" class="textCenter fontHeader border0-bottom ">
+                    Tax Invoice
+                </td>
+            </tr>
+            <tr class="bgLight">
+                <td colspan="9" class="textCenter fontSubHeader border0-bottom">
+                    <span>M/S. ANNAPURNA SWEETS </span><br>
+                    <span>Duburi,&nbsp; Kalinganagar&nbsp;,&nbsp;Jajpur&nbsp;,&nbsp; Odisha-755026</span><br>
+                    <span>Mob-7873444133, &nbsp;&nbsp;Email- tasteavenue.d@gmail.com</span><br>
+                    <span>GSTIN- 21EQZPS3634F1ZF</span>
+                </td>
+            </tr>
+            <tr class="bg1">
+                <td colspan="4" class="fontSubHeader border0-bottom border0-right">
+                    <span>To </span><br>
+                    <span class="marginLeft" style="text-transform: capitalize; "> @Model.custName </span><br>
+                    <span class="marginLeft">@Model.cusstAdd1 </span><br>
+                    <span class="marginLeft">@Model.custAdd2 </span>
+                    <span class="marginLeft">@Model.custAdd3 </span><br />
+                    <span class="marginLeft">GSTIN No : </span><span>@Model.custGstin </span>
+                    @Html.HiddenFor(m => m.IGstType)
+                </td>
+                <td colspan="5" class="fontSubHeader textRight  border0-bottom">
+                    <table width="100%" class="tableBorderColaps">
+                        <tr>
+                            <td style="border: 0">
+                                Invoice No: @Model.INo
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: 0;border-right: 0;border-bottom: 0;">
+                                Invoice Date: @( Model.IDate.HasValue ? Model.IDate.Value.ToString("dd-MM-yyyy") : "")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: 0;border-right: 0;border-bottom: 0;">
+                                DO Number: @( Model.IDate.HasValue ? Model.IDate.Value.ToString("dd-MM-yyyy") : "")
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="bg1">
+                <td colspan="9" class="textCenter">
+                    <!-- Lunch at here --> &nbsp; some notes
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="9" class="textCenter border-top0 border-bottom0">
+                    Part A (Service Items)
+                </td>
+            </tr>
+            <tr class="fontMenuHeader textCenter ">
+                <td style="width:5% ;text-align: center;" class="border-right0">S.N.</td>
+                <td style="width:31% ;" class="border-right0"> Details </td>
+                <td style="width:9% ;" class="border-right0"> HSN/SAC </td>
+                <td style="width:7% ;" class="border-right0"> Qnty </td>
+                <td style="width:13% ;" class="border-right0"> Rate(In Rs.) </td>
+                <td style="width:10% ;" class="" colspan="2"> TOTAL(In Rs.) </td>
+                <td style="width:10% ;display: none;" class="border-right0"> GST% </td>
+                <td style="width:10% ;display: none;" class="border-right0"> GST</td>
+                <td style="width:8% ;display: none;"> TOTAL </td>
+
+            </tr>
+            @{
+                int snNo = 0;
+                foreach (var ss in Model.ItemTransList)
+                {
+                    if (ss.itm_Part == "a")
+                    {
+                        snNo = snNo + 1;
+                        <tr class="fontMenuBody cTableRow border-right0">
+                            <td class="textCenter cItmCode border-right0 border-top0">@snNo</td>
+                            <td class="cItmName border-right0 border-top0"> @ss.itm_ItemDetails </td>
+                            <td class="textCenter cItmHsn border-right0 border-top0">@ss.itm_HSN</td>
+                            <td class="textCenter cItmQty border-right0 border-top0">@ss.itm_Quantity</td>
+                            <td class="textCenter cItmRate border-right0 border-top0">@ss.itm_Rate </td>
+                            <td class="textRight cItmValue  border-top0 partA-total" colspan="2">@ss.itm_Value </td>
+                            <td style="display:none;" class="textCenter cItmGst border-right0 border-top0"> @Convert.ToInt32(ss.itm_GstRate) </td>
+                            <td style="display:none;" class="textRight cItmGstValue border-right0 border-top0 gst-@Convert.ToInt32(ss.itm_GstRate)">@ss.itm_GstValue </td>
+                            <td style="display:none;" class="textRight cItmTotal border-top0 "> @ss.itm_Total </td>
+
+                        </tr>
+                    }
+
+                }
+            }
+
+            <tr class="fontMenuHeader2">
+                @*<td class="textRight" colspan="7" style="border-top: 0px;border-right: 0px"></td>
+                    <td class="textRight" style="border-top: 0px;border-right: 0px" id="partA-gst-footer"></td>
+                    <td class="textRight" style="border-top: 0px;" id="partA_Sub_Total"></td>*@
+
+                <td class="textRight" colspan="5" style="border-top: 0px;border-right: 0px"></td>
+                @*<td class="textRight" style="border-top: 0px;border-right: 0px" id="partA-gst-footer"></td>*@
+                <td class="textRight" colspan="2" style="border-top: 0px;" id="partA_Sub_Total"></td>
+            </tr>
+            <tr class="fontMenuHeader2">
+                <td class="textRight" colspan="5" style="border-top: 0px;border-right: 0px">CGST@2.5 &nbsp;</td>
+                <td class="textRight " colspan="2" style="border-top: 0px" id="lblCgst"></td>
+            </tr>
+            <tr class="fontMenuHeader2">
+                <td class="textRight" colspan="5" style="border-top: 0px;border-right: 0px">SGST@2.5 &nbsp;</td>
+                <td class="textRight" colspan="2" style="border-top: 0px" id="lblSgst"></td>
+            </tr>
+            <tr class="fontMenuHeader2">
+                <td class="textRight" colspan="5" style="border-top: 0px;border-right: 0px">TotalGst(CGST+SGST) &nbsp;</td>
+                <td class="textRight" colspan="2" style="border-top: 0px" id="lblCgstSgst"></td>
+            </tr>
+            <tr class="fontMenuHeader2" style="border-top: 0px">
+                <td class="textRight" colspan="5" style="border-top: 0px;border-right: 0px">Sub Total Amount Rs. (Part A) &nbsp;</td>
+                <td class="textRight" colspan="2" style="border-top: 0px" id="subTotalPartA"></td>
+            </tr>
+
+            <tr>
+                <td colspan="9" class="textCenter" style="border-top: 0px;border-bottom: 0px">
+                    Part B (Supply Items)
+                </td>
+            </tr>
+
+            <tr class="fontMenuHeader textCenter ">
+                <td style="width:5% ;text-align: center;" class="border-right0"> S.N. </td>
+                <td style="width:51% ;" class="border-right0"> Details </td>
+                <td style="width:9% ;" class="border-right0"> HSN/SAC </td>
+                <td style="width:7% ;" class="border-right0"> Qnty </td>
+                <td style="width:10% ;" class="border-right0"> Rate </td>
+                <td style="width:10% ;display:none;" class="border-right0"> Value </td>
+                <td style="width:8% ;" colspan="3"> TOTAL </td>
+            </tr>
+            @{
+                int snNo2 = 0;
+                foreach (var ss in Model.ItemTransList)
+                {
+                    if (ss.itm_Part == "b")
+                    {
+                        snNo2 = snNo2 + 1;
+                        <tr class="fontMenuBody cTableRow">
+                            <td class="textCenter cItmCode border-top0 border-right0">@snNo2</td>
+                            <td class="cItmName border-top0 border-right0"> @ss.itm_ItemDetails </td>
+                            <td class="textCenter cItmHsn border-top0 border-right0">@ss.itm_HSN</td>
+                            <td class="textCenter cItmQty border-top0 border-right0">@ss.itm_Quantity</td>
+                            <td class="textCenter cItmRate border-top0 border-right0">@ss.itm_Rate </td>
+                            <td style="display:none;" class="textRight cItmValue border-top0 border-right0">@ss.itm_Value </td>
+                            <td class="textRight cItmTotal border-top0 partB-total" colspan="3"> @ss.itm_Total </td>
+                        </tr>
+                    }
+
+                }
+            }
+
+            <tr class="fontMenuHeader2">
+                <td colspan="6" class="textRight" style="border-top: 0px; border-right:0;">Sub Total Amount Rs. (Part B) &nbsp;</td>
+                <td colspan="3" class="textRight" style="border-top: 0px;" id="subTotalPartB"></td>
+            </tr>
+
+
+            <tr class="fontMenuHeader2">
+                <td class="textCenter" colspan="6" style="border-top: 0px;border-right:0;"> Grand Total Amount Rs. (Part A + part B)</td>
+                <td class="textRight" colspan="3" style="border-top: 0px;" id="totalPartA_PartB"></td>
+
+            </tr>
+            <tr class="bg1">
+                <td colspan="9" class="textCenter" style="border-top: 0px;">
+                    Rupees in words - ( <span id="wordprint">  </span>  &nbsp; rupees only  )
+                </td>
+            </tr>
+            <tr class="bgLight footerHeight textRight">
+                <td colspan="10" style="border-top: 0px;">
+                    <div class="marginRight">
+                        For M/S. ANNAPURNA SWEETS
+                        <br> <br><br>
+                        Auttorised Signature
+                    </div>
+                    <br>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+    <div style="margin-left: 17%;">
+        <input type="button" class="btn btn-success" onclick="PrintDiv();" value="Print" />| <a href="/Invoice/GstInvoiceList">Invoice List</a> | <a href="/Invoice/GstInvoiceCreate" style="color:green">Create New Invoice</a>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+
+    <script type="text/javascript">
+
+        function PrintDiv() {
+            var divContents = document.getElementById("tblInvoice").innerHTML;
+            var printWindow = window.open('', '', 'height=600,width=1200');
+            printWindow.document.write('<html><head><title>Bill Content2</title> <style type="text/css"> .table { width: 700px; font-family: Times New Roman; font-size: 14px; border-spacing: 0; border-width: 0; padding: 0; border-width: 0; } .tableBorderColaps { height: 73px; border-spacing: 0; border-width: 0; padding: 0; border-width: 0; } .bgLight{ background-color: #e0f7faa1; } .textCenter{ text-align: center; } .textRight{ text-align: right; } .textLeft{ text-align: left; } .fontHeader{ font-size: 25px; font-weight:bolder ; } .fontSubHeader{ font-size: 15px; font-weight:bolder ; } .fontMenuHeader{ font-size: 13px; font-weight:bolder ; height: 40px; background-color: #e0f7faa1; } .fontMenuBody{ font-size: 12px; } /* .fontMenuBody>td{ text-align: center; } */ .marginLeft{ margin-left: 20px; } .marginRight{ margin-right: 75px; } .footerHeight{ height: 125px; } .border-theme{ border: 1px solid #9bcad0a1; } .bg-theme{ background-color: #e0f7faa1; } </style>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+        $(document).ready(function () {
+            var total_gst5_value = 0.00, total_partA_value = 0.00, total_partB_value = 0.00;
+
+            //onReady---start
+            gstCalculation();
+            //onReady----end
+
+            $('.gst-5').each(function () {
+                let gst5_value = parseFloat($(this).html());
+                total_gst5_value = total_gst5_value + gst5_value;
+            });
+
+            $('.partA-total').each(function () {
+                let partA_value = parseFloat($(this).html());
+                total_partA_value = total_partA_value + partA_value;
+            });
+
+            $('.partB-total').each(function () {
+                let partB_value = parseFloat($(this).html());
+                total_partB_value = total_partB_value + partB_value;
+            });
+
+
+            $('#partA-gst-footer').html(total_gst5_value);
+            $('#partA_Sub_Total').html((total_partA_value).toFixed(2));
+            $('#lblCgst').html((total_gst5_value / 2).toFixed(2));
+            $('#lblSgst').html((total_gst5_value / 2).toFixed(2));
+            $('#lblCgstSgst').html((total_gst5_value).toFixed(2));
+            $('#subTotalPartA').html((total_gst5_value + total_partA_value).toFixed(2));
+            $('#subTotalPartB').html((total_partB_value).toFixed(2));
+
+            let rupeesInWords = Math.round((total_gst5_value + total_partA_value) + (total_partB_value));
+
+            $('#totalPartA_PartB').html(rupeesInWords);
+            $.ajax({
+                url: '/Invoice/GetRupeesInwords',
+                type: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({ rps: parseFloat(rupeesInWords) }),
+                success: function (data) {
+                    debugger
+                    $('#wordprint').html(data);
+
+
+                }
+            });
+
+
+
+            function gstCalculation() {
+                var gst5 = 0.00, gst12 = 0.00, gst18 = 0.00, gstAll = 0.00;
+
+                $('.cTableRow').each(function () {
+                    let gstGroup = $(this).find("td:eq(6)").text().trim();
+                    let gstValue = $(this).find("td:eq(7)").text().trim();
+
+                    gstAll = (parseFloat(gstAll) + parseFloat(gstValue)).toFixed(2);
+
+                    if (gstGroup == "5") {
+                        gst5 = (parseFloat(gst5) + parseFloat(gstValue)).toFixed(2);
+                    }
+                    else if (gstGroup == "12") {
+                        gst12 = (parseFloat(gst12) + parseFloat(gstValue)).toFixed(2);
+                    }
+                    else if (gstGroup == "18") {
+                        gst18 = (parseFloat(gst18) + parseFloat(gstValue)).toFixed(2);
+                    }
+                });
+
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+﻿@model HotelBill.Models.CustomerMaster
+@{
+    ViewBag.Title = "Customer Edit";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "customerEditForm" }))
+{
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-info card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">Edit Customer</h3>
+                            </div>
+                            <div>
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Customer Name</label>
+                                            @Html.HiddenFor(m => m.custId)
+                                            @Html.TextBoxFor(m => m.custName, new { placeholder = "Customer Name", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.custName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Address line 1</label>
+                                            @Html.TextBoxFor(m => m.addr1, new { placeholder = "Address 1", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.addr1, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Address line 2</label>
+                                            @Html.TextBoxFor(m => m.addr2, new { placeholder = "Address 2", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.addr2, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Address line 3</label>
+                                            @Html.TextBoxFor(m => m.addr3, new { placeholder = "Address 3", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.addr3, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">GstIn Number</label>
+                                            @Html.TextBoxFor(m => m.gstIn, new { placeholder = "GstIn Number", @class = "form-control form-control-sm" })
+                                            @Html.ValidationMessageFor(m => m.gstIn, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Gst Type</label>
+                                            @Html.HiddenFor(x=>x.gstType)
+                                            <select class="form-control form-control-sm" id="gstTypeEdit" name="gstTypeEdit">
+                                                <option value="0">-- Select One --</option>
+                                                <option value="1">CGST/ SGST</option>
+                                                <option value="2">IGST</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="exampleInputEmail1">Is Active For Transaction</label>
+                                            @Html.CheckBoxFor(m => m.isActive, new {   @class = "form-control form-control-sm" })
+                                            @if (Model != null && Model.isActive != null && Model.isActive == true)
+                                            {
+                                                <span class="acCustomer text-green">(Active)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="acCustomer text-red">(Inactive)</span>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    @if (ViewBag.isPresent != null)
+                                    { <span class="bg-red btn btn-sm">@ViewBag.isPresent</span> }
+                                    <button type="submit" id="CustomerUpdate" class="btn  btn-sm  btn-info w104">Update</button>
+                                    <a href="/Product/CustomerList" class="btn btn-sm   btn-outline-danger w104">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+}
+
+<aside class="control-sidebar control-sidebar-dark"></aside>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var getGstType = $("#gstType").val();
+        if (getGstType != "")
+        {
+            $("#gstTypeEdit").val(getGstType).change();
+        }
+        else {
+            $("#gstTypeEdit").val(0).change();
+        }
+
+        $("#gstTypeEdit").change(function () {
+            const ddlValue = $(this).val();
+            $("#gstType").val(ddlValue);
+        });
+
+        $("#CustomerUpdate").click(function (e) {
+            e.preventDefault();
+            debugger;
+            var custName = $("#custName").val();
+            var addr1 = $("#addr1").val();
+            var addr2 = $("#addr2").val();
+            var gstIn = $("#gstIn").val();
+            var gstType = $("#gstType").val()
+
+            var isPost = false;
+
+            if (custName == "") { swal("", "Customer Name should not be empty", "error"); return false; }
+            if (addr1 == "") { swal("", "Address 1 should not be empty", "error"); return false; }
+
+            if (addr2 == "") { swal("", "Address 2 should not be empty", "error"); return false; }
+            if (gstIn == "") { swal("", "GstIn should not be empty", "error"); return false; }
+            if (gstType == 0) { swal("", "Please select GST Type"); return false; }
+
+            isPost = true
+
+            if (isPost == true) {
+                $("#customerEditForm").submit();
+            }
+        });
+    });
+</script>
